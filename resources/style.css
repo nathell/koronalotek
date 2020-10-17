@@ -1,0 +1,120 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Helvetica, Arial, sans-serif;
+    background-color: #e5e5e5;
+    color: #2d4059;
+}
+
+h1 {
+    margin: 0;
+    line-height: 250px;
+    font-size: 150px;
+    text-align: center;
+    letter-spacing: -4.5px;
+    text-shadow: 5px 5px #555;}
+
+h1 > span {
+    color: #ea5455;
+}
+
+h2 {
+    font-size: 60px;
+    text-align: center;
+    padding: 0;
+    margin: 0 0 40px 0;
+}
+
+form {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50px 50px;
+    grid-gap: 12px;
+    margin-top: 12px;
+}
+
+label {
+    text-align: right;
+    line-height: 50px;
+    margin-right: 12px;
+    font-size: 24px;
+}
+
+section {
+    padding: 30px 0;
+}
+
+section.title {
+    padding: 0;
+    margin: 0;
+    height: 250px;
+}
+
+section.next {
+    background-color: #decdc3;
+}
+
+input {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 24px;
+    width: 400px;
+    padding-left: 10px;
+}
+
+input[type=number] {
+    width: 200px;
+}
+
+button {
+    border-radius: 5px;
+    font-size: 30px;
+    width: 320px;
+    margin: 15px auto;
+    grid-area: 3 / 1 / 4 / 3;
+}
+
+.winners-count {
+    position: absolute;
+    right: 100px;
+    top: 100px;
+    width: 300px;
+    height: 300px;
+    border-radius: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #ea5455;
+    color: #eee;
+    font-size: 24px;
+}
+
+.winners-count div {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.winners-count div.number {
+    font-size: 72px;
+    font-weight: 700;
+    padding: 9px 0;}
+
+.winners > * {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+ul {
+    font-size: 24px;
+    padding-top: 24px;
+}
+
+.next > p {
+    text-align: center;
+    font-size: 24px;
+}
+
+a {
+    color: #ea5455;
+}
