@@ -12,7 +12,8 @@ h1 {
     font-size: 150px;
     text-align: center;
     letter-spacing: -4.5px;
-    text-shadow: 5px 5px #555;}
+    text-shadow: 5px 5px #555;
+}
 
 h1 > span {
     color: #ea5455;
@@ -58,6 +59,7 @@ input {
     font-family: Helvetica, Arial, sans-serif;
     font-size: 24px;
     width: 400px;
+    max-width: 100%;
     padding-left: 10px;
 }
 
@@ -69,6 +71,7 @@ button {
     border-radius: 5px;
     font-size: 30px;
     width: 320px;
+    max-width: 100%;
     margin: 15px auto;
     grid-area: 3 / 1 / 4 / 3;
 }
@@ -117,4 +120,45 @@ ul {
 
 a {
     color: #ea5455;
+}
+
+@media screen and (max-width: 959px) {
+    .winners-count {
+        position: static;
+        margin: 12px auto 0 auto;
+    }
+
+    .timeline-item .event-line {
+        font-size: 14px;
+    }
+
+    h1 {
+        line-height: 100px;
+        font-size: 55px;
+        letter-spacing: -2px;
+        text-shadow: 2px 2px #555;
+    }
+
+    section.title {
+        padding: 0;
+        margin: 0;
+        height: 100px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    label, input {
+        text-align: left;
+    }
+
+    h2 {
+        font-size: 36px;
+        text-align: center;
+        padding: 0;
+        margin: 0 0 40px 0;
+    }
 }
