@@ -82,7 +82,7 @@
   {:date new-date
    :cases new-cases
    :guesses []
-   :winners (calculate-winners cases guesses)})
+   :winners (calculate-winners new-cases guesses)})
 
 (defn new-data!
   [new-date new-cases]
