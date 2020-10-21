@@ -118,7 +118,9 @@
   (condp = [request-method uri]
     [:get "/"] (response/response (page))
     [:post "/"] (handle-guess request)
-    (response/not-found "żodyn")))
+    {:status 404,
+     :headers {"Content-Type" "text/plain; charset=utf-8"},
+     :body "żodyn"}))
 
 (def handler
   (-> basic-handler
