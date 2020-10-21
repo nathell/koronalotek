@@ -71,22 +71,26 @@
    (winners-count @state)
    (winners @state)))
 
-(defn calculate-winners [cases guesses]
+(defn calculate-winners [cases guesses timestamp]
   (->> guesses
+       (filter #(neg? (compare (:timestamp %) timestamp)))
        (map #(assoc % :delta (- (:guess %) cases)))
        (sort-by #(Math/abs (:delta %)))
        (take 10)))
 
+(defn format-date [d]
+  (.format (java.text.SimpleDateFormat. "yyyy-MM-dd") d))
+
 (defn update-state
-  [{:keys [cases guesses] :as state} new-date new-cases]
-  {:date new-date
+  [{:keys [cases guesses] :as state} timestamp new-cases]
+  {:date (format-date timestamp)
    :cases new-cases
    :guesses []
-   :winners (calculate-winners new-cases guesses)})
+   :winners (calculate-winners new-cases guesses timestamp)})
 
 (defn new-data!
-  [new-date new-cases]
-  (swap! state update-state new-date new-cases)
+  [timestamp new-cases]
+  (swap! state update-state timestamp new-cases)
   nil)
 
 (defn confirmation [ok?]
@@ -128,4 +132,5 @@
       (wrap-resource "/")))
 
 (comment
+  (new-data! #inst "2020-10-21T10:30+02:00" 10040)
   (def j (jetty/run-jetty #'handler {:port 8008, :join? false})))
