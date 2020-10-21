@@ -97,10 +97,11 @@
     [:h2 (if ok? "mamy Twój typ" "coś nie tak")]
     [:p [:a {:href "/"} "wróć na stronę główną"]]]))
 
-(defn validate-guess [{{:strs [guess name] :as params} :form-params, ip :remote-addr}]
+(defn validate-guess [{{:strs [guess name] :as params} :form-params, :keys [remote-addr headers]}]
   (try
     (when (and (string? guess) (string? name))
-      (let [guess (Long/parseLong guess)]
+      (let [guess (Long/parseLong guess)
+            ip (or (get headers "x-real-ip") remote-addr)]
         (when (>= guess 0)
           {:guess guess, :name name, :timestamp (Date.), :ip ip})))
     (catch Exception _ nil)))
