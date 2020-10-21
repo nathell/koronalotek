@@ -7,10 +7,10 @@
             [ring.middleware.resource :refer [wrap-resource]])
   (:import [java.util Date]))
 
-(def state (atom {:date "2020-10-17"
-                  :cases 9622
-                  :winners []
-                  :guesses []}))
+(defonce state (atom {:date "2020-10-17"
+                      :cases 9622
+                      :winners []
+                      :guesses []}))
 
 (defn winners-count [{:keys [date cases]}]
   (let [month-names ["stycznia" "lutego" "marca" "kwietnia" "maja" "czerwca"
