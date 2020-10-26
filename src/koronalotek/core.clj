@@ -93,12 +93,22 @@
   (swap! state update-state timestamp new-cases)
   nil)
 
+(defn success-img []
+  [:section.success
+   [:p
+    [:a {:href "https://zrzutka.pl/kasa-na-aborcyjny-dream-team"}
+     [:img {:src (rand-nth ["furiosa.jpg" "wypierdalac.svg" "wojna.svg"])}]]]
+   [:p
+    [:a {:href "https://zrzutka.pl/kasa-na-aborcyjny-dream-team"} "wrzuć pieniądz na Aborcyjny Dream Team"]]])
+
 (defn confirmation [ok?]
   (layout
    [:section.title
     [:h1 "korona" [:wbr] [:span "lotek"]]]
    [:section.next
     [:h2 (if ok? "mamy Twój typ" "coś nie tak")]
+    (when ok?
+      (success-img))
     [:p [:a {:href "/"} "wróć na stronę główną"]]]))
 
 (defn validate-guess [{{:strs [guess name] :as params} :form-params, :keys [remote-addr headers]}]
