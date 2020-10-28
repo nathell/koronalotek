@@ -68,6 +68,7 @@ section.title {
     padding: 0;
     margin: 0;
     height: 250px;
+    position: relative;
 }
 
 section.next {
@@ -141,6 +142,36 @@ a {
     color: #ea5455;
 }
 
+.faq {
+    background-color: #decdc3;
+}
+
+.faq dl {
+    padding: 12px;
+    font-size: 24px;
+    line-height: 30px;
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.faq dt {
+    font-weight: 700;
+    margin-top: 24px;
+}
+
+.faq dd {
+    margin: 0;
+}
+
+.faq-link {
+    display: inline-block;
+    position: relative;
+    top: 18px;
+    left: -12px;
+    font-size: 48px;
+    text-decoration: none;
+}
+
 @media screen and (max-width: 959px) {
     .winners-count {
         position: static;
@@ -178,6 +209,18 @@ a {
         font-size: 36px;
         text-align: center;
         padding: 0;
-        margin: 0 0 40px 0;
+        margin: 0;
+    }
+
+    .faq-link {
+        position: absolute;
+        top: 36px;
+        left: 0;
+        font-size: 24px;
+    }
+
+    .faq dl {
+        font-size: 18px;
+        line-height: 24px;
     }
 }

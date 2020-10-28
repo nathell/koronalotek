@@ -3,6 +3,7 @@
             [hiccup2.core :refer [html]]
             [ring.adapter.jetty :as jetty]
             [ring.util.response :as response]
+            [ring.middleware.content-type :refer [wrap-content-type]]
             [ring.middleware.params :refer [wrap-params]]
             [ring.middleware.resource :refer [wrap-resource]])
   (:import [java.util Date]))
@@ -35,7 +36,11 @@
       [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]
       [:link {:rel "stylesheet" :href "style.css"}]
       [:title "koronalotek"]]
-     (into [:body] content)])))
+     (into
+      [:body
+       [:section.title
+        [:h1 [:a.faq-link {:href "/faq"} "ℹ️"] "korona" [:wbr] [:span "lotek"]]]]
+      content)])))
 
 (defn winners [{:keys [winners]}]
   [:section.winners
@@ -56,10 +61,31 @@
      [:ul
       [:li "to pierwsze losowanie – jeszcze nie było zwycięzców!"]])])
 
+(defn faq []
+  (layout
+   [:section.faq
+    [:h2 "FAQ"]
+    [:dl
+     [:dt "co można wygrać?"]
+     [:dd "Wieczną sławę i chwałę. Chyba że przyjdzie Sasin i ufunduje coś jeszcze."]
+     [:dt "czy można typować więcej niż raz?"]
+     [:dd "Można. Głosy oddawane z automatu będą usuwane, podobnie jak za wiele głosów jednej osoby."]
+     [:dt "jakie dane są zbierane?"]
+     [:dd "Imię (albo cokolwiek, co wpiszesz w polu na imię), zgadnięta liczba przypadków, numer IP, data i czas oddania głosu." [:br] "Strona " [:em "nie"] " używa ciasteczek."]
+     [:dt "kiedy wyniki?"]
+     [:dd "Jutro. Niedługo po tym, jak Ministerstwo Zdrowia opublikuje oficjalne dane z ostatniej doby – na ogół ok. 10:30. Na razie wyniki wpisywane są ręcznie, więc wyniki mogą się opóźnić. Głosy oddane po publikacji danych przez MZ nie są brane pod uwagę."]
+     [:dt "dlaczego nie ma mnie na liście?"]
+     [:dd "Nie zgadłoś, zagłosowałoś za późno albo Twój głos nie spodobał się administracji."]
+     [:dt "kto za tym stoi?"]
+     [:dd "Jak to kto? " [:a {:href "http://danieljanus.pl"} "Rząd światowy."]]
+     [:dt "czy nosić maseczkę?"]
+     [:dd [:a {:href "https://pws.byu.edu/covid-19-and-masks"} "Tak."]]
+     [:dt "nie ma żadnej pandemii!"]
+     [:dd "Spadaj, foliarzu."]
+     [:p [:a {:href "/"} "wróć na stronę główną"]]]]))
+
 (defn page []
   (layout
-   [:section.title
-    [:h1 "korona" [:wbr] [:span "lotek"]]]
    [:section.next
     [:h2 "zgaduj zgadula"]
     [:form {:action "/" :method "post"}
@@ -74,6 +100,8 @@
 (defn calculate-winners [cases guesses timestamp]
   (->> guesses
        (filter #(neg? (compare (:timestamp %) timestamp)))
+       (map #(dissoc % :timestamp))
+       (distinct)
        (map #(assoc % :delta (- (:guess %) cases)))
        (sort-by #(Math/abs (:delta %)))
        (take 10)))
@@ -103,8 +131,6 @@
 
 (defn confirmation [ok?]
   (layout
-   [:section.title
-    [:h1 "korona" [:wbr] [:span "lotek"]]]
    [:section.next
     [:h2 (if ok? "mamy Twój typ" "coś nie tak")]
     (when ok?
@@ -120,17 +146,21 @@
           {:guess guess, :name name, :timestamp (Date.), :ip ip})))
     (catch Exception _ nil)))
 
+(defn html-response [body]
+  {:status 200, :headers {"content-type" "text/html; charset=utf-8"}, :body body})
+
 (defn handle-guess [request]
   (if-let [guess (validate-guess request)]
     (do
       (let [new-state (swap! state update :guesses conj guess)]
         (spit "state.edn" (pr-str new-state)))
-      (response/response (confirmation true)))
-    (response/response (confirmation false))))
+      (html-response (confirmation true)))
+    (html-response (confirmation false))))
 
 (defn basic-handler [{:keys [request-method uri] :as request}]
   (condp = [request-method uri]
-    [:get "/"] (response/response (page))
+    [:get "/"] (html-response (page))
+    [:get "/faq"] (html-response (faq))
     [:post "/"] (handle-guess request)
     {:status 404,
      :headers {"Content-Type" "text/plain; charset=utf-8"},
@@ -139,7 +169,8 @@
 (def handler
   (-> basic-handler
       (wrap-params)
-      (wrap-resource "/")))
+      (wrap-resource "/")
+      (wrap-content-type)))
 
 (comment
   (new-data! #inst "2020-10-21T10:30+02:00" 10040)
