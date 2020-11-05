@@ -39,7 +39,8 @@
      (into
       [:body
        [:section.title
-        [:h1 [:a.faq-link {:href "/faq"} "ℹ️"] "korona" [:wbr] [:span "lotek"]]]]
+        [:h1 [:a.faq-link {:href "/faq"} "ℹ️"]
+         [:a.korona {:href "/"} "korona"] [:wbr] [:a.lotek {:href "/"} [:span "lotek"]]]]]
       content)])))
 
 (defn winners [{:keys [winners]}]
@@ -171,6 +172,30 @@
       (wrap-params)
       (wrap-resource "/")
       (wrap-content-type)))
+
+;; admin
+
+(defn remove-ip
+  [state ip]
+  (update state :guesses (fn [guesses] (remove #(= (:ip %) ip) guesses))))
+
+(defn remove-ip!
+  [ip]
+  (swap! state remove-ip ip))
+
+(defn ip-freq
+  ([] (ip-freq @state))
+  ([state]
+   (->> state :guesses (map :ip) frequencies (sort-by val >))))
+
+(defn top-names
+  ([] (top-names @state))
+  ([state]
+   (->> (:guesses state) (map :name) (distinct) (sort-by count >))))
+
+(defn count-guesses
+  ([] (count-guesses @state))
+  ([state] (count (:guesses state))))
 
 (comment
   (new-data! #inst "2020-10-21T10:30+02:00" 10040)

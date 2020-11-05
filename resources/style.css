@@ -172,6 +172,18 @@ a {
     text-decoration: none;
 }
 
+.title a.korona, .title a.lotek {
+    text-decoration: none;
+}
+
+.title a.lotek {
+    color: #ea5455;
+}
+
+.title a.korona {
+    color: #2d4059;
+}
+
 @media screen and (max-width: 959px) {
     .winners-count {
         position: static;
