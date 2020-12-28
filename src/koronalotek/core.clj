@@ -1,12 +1,15 @@
 (ns koronalotek.core
   (:require [clojure.string :as string]
             [hiccup2.core :refer [html]]
+            [integrant.core :as integrant]
             [ring.adapter.jetty :as jetty]
             [ring.util.response :as response]
             [ring.middleware.content-type :refer [wrap-content-type]]
             [ring.middleware.params :refer [wrap-params]]
             [ring.middleware.resource :refer [wrap-resource]])
   (:import [java.util Date]))
+
+(def config {:server {:port 8008}})
 
 (defonce state (atom {:date "2020-10-17"
                       :cases 9622
@@ -196,6 +199,15 @@
 (defn count-guesses
   ([] (count-guesses @state))
   ([state] (count (:guesses state))))
+
+(defmethod integrant/init-key :server [_ {:keys [port]}]
+  (jetty/run-jetty #'handler {:port port, :join? false}))
+
+(defmethod integrant/halt-key! :server [_ server]
+  (.stop server))
+
+(defonce system
+  (integrant/init config))
 
 (comment
   (new-data! #inst "2020-10-21T10:30+02:00" 10040)

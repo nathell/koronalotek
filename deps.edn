@@ -1,3 +1,6 @@
 {:paths ["src" "resources"]
- :deps  {ring/ring     {:mvn/version "1.8.2"}
-         hiccup/hiccup {:mvn/version "2.0.0-alpha2"}}}
+ :deps  {clojure.java-time/clojure.java-time {:mvn/version "0.3.2"}
+         hiccup/hiccup                       {:mvn/version "2.0.0-alpha2"}
+         integrant/integrant                 {:mvn/version "0.8.0"}
+         jarohen/chime                       {:mvn/version "0.3.2"}
+         ring/ring                           {:mvn/version "1.8.2"}}}
