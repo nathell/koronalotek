@@ -6,7 +6,8 @@
             [ring.adapter.jetty :as jetty])
   (:import [java.util Date]))
 
-(def config {:server {:port 8008}})
+(def config {:server {:port 8008}
+             :updater {:every [5 :minutes]}})
 
 (defmethod integrant/init-key :server [_ {:keys [port]}]
   (jetty/run-jetty #'handler/handler {:port port, :join? false}))
