@@ -24,8 +24,11 @@
 
 (defn new-data!
   [timestamp new-cases]
-  (swap! state update-state timestamp new-cases)
-  nil)
+  (let [old-state @state
+        {:keys [date]} (swap! state update-state timestamp new-cases)
+        filename (format "state-%s.edn" date)]
+    (spit filename (pr-str old-state))
+    nil))
 
 ;; admin
 
