@@ -3,6 +3,7 @@
             [hiccup2.core :refer [html]]
             [integrant.core :as integrant]
             [koronalotek.handler :as handler]
+            [koronalotek.updater :as updater]
             [ring.adapter.jetty :as jetty])
   (:import [java.util Date]))
 
@@ -15,9 +16,11 @@
 (defmethod integrant/halt-key! :server [_ server]
   (.stop server))
 
+(defmethod integrant/init-key :updater [_ args]
+  (updater/start args))
+
+(defmethod integrant/halt-key! :updater [_ updater]
+  (updater/stop updater))
+
 (defonce system
   (integrant/init config))
-
-(comment
-  (new-data! #inst "2020-10-21T10:30+02:00" 10040)
-  (def j (jetty/run-jetty #'handler {:port 8008, :join? false})))
