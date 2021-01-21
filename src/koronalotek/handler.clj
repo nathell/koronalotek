@@ -20,6 +20,14 @@
      [:div.number (str cases)]
      [:div new-cases [:br "w Polsce"]]]))
 
+(defn banner []
+  (try
+    (let [content (read-string (slurp "banner.edn"))]
+      [:section.banner
+       [:button.close {:onclick "document.querySelector('.banner').classList.add('hidden')"} "×"]
+       content])
+    (catch Exception _ nil)))
+
 (defn layout [& content]
   (str
    "<!DOCTYPE html>\n"
@@ -32,6 +40,7 @@
       [:title "koronalotek"]]
      (into
       [:body
+       (banner)
        [:section.title
         [:h1 [:a.faq-link {:href "/faq"} "ℹ️"]
          [:a.korona {:href "/"} "korona"] [:wbr] [:a.lotek {:href "/"} [:span "lotek"]]]]]
