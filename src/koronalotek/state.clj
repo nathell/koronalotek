@@ -1,10 +1,19 @@
 (ns koronalotek.state
-  (:require [koronalotek.time :as time]))
+  (:require [clojure.edn :as edn]
+            [koronalotek.time :as time]))
 
-(defonce state (atom {:date "2020-10-17"
-                      :cases 9622
-                      :winners []
-                      :guesses []}))
+(defn load-state
+  ([] (load-state "state.edn"))
+  ([filename]
+   (try
+     (edn/read-string (slurp filename))
+     (catch Exception _ nil))))
+
+(defonce state (atom (or (load-state)
+                         {:date "2020-10-17"
+                          :cases 9622
+                          :winners []
+                          :guesses []})))
 
 (defn calculate-winners [cases guesses timestamp]
   (->> guesses
