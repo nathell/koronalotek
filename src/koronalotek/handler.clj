@@ -106,10 +106,10 @@
 (defn success-img []
   [:section.success
    [:p
-    [:a {:href "https://zrzutka.pl/kasa-na-aborcyjny-dream-team"}
-     [:img {:src (rand-nth ["furiosa.jpg" "wypierdalac.svg" "wojna.svg"])}]]]
-   [:p
-    [:a {:href "https://zrzutka.pl/kasa-na-aborcyjny-dream-team"} "wrzuć pieniądz na Aborcyjny Dream Team"]]])
+    [:a {:href "https://zrzutka.pl/9v584r"}
+     [:img {:src "help.jpg"}]]]
+   [:p [:a {:href "https://zrzutka.pl/9v584r"} "uratuj życie, kup śpiwór zamarzającej osobie"]]
+   [:p [:a {:href "https://nowyswiat.online/to-dzieje-sie-teraz-przy-bialoruskiej-granicy-rozmowa-ze-swiadkiem-wydarzen/"} "co się dzieje na granicy?"]]])
 
 (defn confirmation [ok?]
   (layout
