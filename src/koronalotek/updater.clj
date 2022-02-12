@@ -8,13 +8,13 @@
             [reaver]))
 
 (def data-uri
-  "https://services-eu1.arcgis.com/zk7YlClTgerl62BY/arcgis/rest/services/global_corona_actual_widok2/FeatureServer/0/query?f=json&where=1%3D1&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&resultOffset=0&resultRecordCount=1&resultType=standard&cacheHint=true")
+  "https://services-eu1.arcgis.com/zk7YlClTgerl62BY/arcgis/rest/services/global_corona_actual_widok3/FeatureServer/0/query?f=json&cacheHint=true&resultOffset=0&resultRecordCount=1&where=1%3D1&orderByFields=&outFields=*&resultType=standard&returnGeometry=false&spatialRel=esriSpatialRelIntersects")
 
 (defn get-data []
   (try
     (let [data (json/parse-string (slurp data-uri) keyword)
           attributes (-> data :features first :attributes)]
-      {:cases (:ZAKAZENIA_DZIENNE attributes),
+      {:cases (:dzienne_wszystkie_zakazenia attributes),
        :as-of (java.util.Date. (:Data attributes))})))
 
 (def state (atom {:as-of #inst "2020-12-28T09:00:00.000-00:00"
