@@ -105,11 +105,8 @@
 
 (defn success-img []
   [:section.success
-   [:p
-    [:a {:href "https://zrzutka.pl/9v584r"}
-     [:img {:src "help.jpg"}]]]
-   [:p [:a {:href "https://zrzutka.pl/9v584r"} "uratuj życie, kup śpiwór zamarzającej osobie"]]
-   [:p [:a {:href "https://nowyswiat.online/to-dzieje-sie-teraz-przy-bialoruskiej-granicy-rozmowa-ze-swiadkiem-wydarzen/"} "co się dzieje na granicy?"]]])
+   [:p [:a {:href "https://crm.ocalenie.org.pl/civicrm/contribute/transact?reset=1&id=3&lang=pl"} "wrzuć monetę dla Fundacji Ocalenie"]]
+   [:p [:a {:href "https://danieljanus.pl/wladcyslow/"} "może partyjkę Władców Słów?"]]])
 
 (defn confirmation [ok?]
   (layout
