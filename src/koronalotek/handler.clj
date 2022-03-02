@@ -105,16 +105,20 @@
 
 (defn success-img []
   [:section.success
-   [:p [:a {:href "https://crm.ocalenie.org.pl/civicrm/contribute/transact?reset=1&id=3&lang=pl"} "wrzuć monetę dla Fundacji Ocalenie"]]
-   [:p [:a {:href "https://danieljanus.pl/wladcyslow/"} "może partyjkę Władców Słów?"]]])
+   [:h2 "POMÓŻ UKRAINIE"]
+   [:p [:a {:href "https://www.siepomaga.pl/pah-ukraina"} "zbiórka Polskiej Akcji Humanitarnej"]]
+   [:p [:a {:href "https://pcpm.org.pl/ukraina"} "zbiórka Polskiego Centrum Pomocy Międzynarodowej"]]
+   [:p [:a {:href "https://armysos.com.ua/en/help-the-army"} "bezpośrednie wsparcie armii ukraińskiej"]]
+   [:p [:a {:href "https://kporembinski.notion.site/kporembinski/Kompendium-Pomoc-dla-Ukrainy-36bf703e701a40589d9943c4059e8e4c"} "kompendium: pomoc dla Ukrainy"]]])
 
 (defn confirmation [ok?]
   (layout
    [:section.next
-    [:h2 (if ok? "mamy Twój typ" "coś nie tak")]
-    (when ok?
+    (success-img)
+    #_ [:h2 (if ok? "mamy Twój typ" "coś nie tak")]
+    #_ (when ok?
       (success-img))
-    [:p [:a {:href "/"} "wróć na stronę główną"]]]))
+    [:p [:a {:href "/"} "wróć na stronę główną"] " | Putin, idi na chuj"]]))
 
 (defn validate-guess [{{:strs [guess name] :as params} :form-params, :keys [remote-addr headers]}]
   (try

@@ -12,7 +12,6 @@ h1 {
     font-size: 150px;
     text-align: center;
     letter-spacing: -4.5px;
-    text-shadow: 5px 5px #555;
 }
 
 h1 > span {
@@ -214,15 +213,18 @@ a {
 }
 
 .title a.korona, .title a.lotek {
+    background: linear-gradient(180deg, #005BBB 50%, #FFD500 50%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     text-decoration: none;
 }
 
 .title a.lotek {
-    color: #ea5455;
+   /* color: #ea5455; */
 }
 
 .title a.korona {
-    color: #2d4059;
+    /* color: #2d4059; */
 }
 
 @media screen and (max-width: 959px) {
@@ -239,7 +241,7 @@ a {
         line-height: 100px;
         font-size: 55px;
         letter-spacing: -2px;
-        text-shadow: 2px 2px #555;
+        /* text-shadow: 2px 2px #555; */
     }
 
     section.title {
